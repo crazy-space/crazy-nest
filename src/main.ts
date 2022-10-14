@@ -2,8 +2,9 @@
  * @Author: Youzege
  * @Date: 2022-10-14 10:57:22
  * @LastEditors: Youzege
- * @LastEditTime: 2022-10-14 10:59:17
+ * @LastEditTime: 2022-10-14 16:14:04
  */
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import {
   FastifyAdapter,
@@ -22,6 +23,15 @@ async function bootstrap() {
   app.setGlobalPrefix('api')
   // 自定义约束-注入依赖
   useContainer(app.select(AppModule), { fallbackOnErrors: true })
+
+  // 验证管道
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  )
 
   await app.listen(3000, '0.0.0.0')
 

@@ -1,3 +1,9 @@
+/*
+ * @Author: Youzege
+ * @Date: 2022-10-14 10:57:22
+ * @LastEditors: Youzege
+ * @LastEditTime: 2022-10-14 14:36:22
+ */
 import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as request from 'supertest'
@@ -17,6 +23,9 @@ describe('AppController (e2e)', () => {
   })
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!')
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!')
   })
 })

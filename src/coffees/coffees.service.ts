@@ -2,8 +2,9 @@
  * @Author: Youzege
  * @Date: 2022-10-14 13:52:11
  * @LastEditors: Youzege
- * @LastEditTime: 2022-10-15 15:56:13
+ * @LastEditTime: 2022-10-15 22:32:34
  */
+import { PaginationQueryDto } from '@/common/pagination-query.dto'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -34,9 +35,12 @@ export class CoffeeService {
     return coffee
   }
 
-  findAll() {
+  findAll(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery
     return this.coffeeRepository.find({
       relations: ['flavors'],
+      skip: offset,
+      take: limit,
     })
   }
 

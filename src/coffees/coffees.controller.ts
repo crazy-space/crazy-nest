@@ -1,3 +1,9 @@
+/*
+ * @Author: Youzege
+ * @Date: 2022-10-14 22:53:44
+ * @LastEditors: Youzege
+ * @LastEditTime: 2022-10-15 22:30:19
+ */
 import {
   Body,
   Controller,
@@ -6,7 +12,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common'
+
+import { PaginationQueryDto } from '@/common/pagination-query.dto'
 
 import { CoffeeService } from './coffees.service'
 import { CreateCoffeeDto } from './dto/create-coffee.dto'
@@ -23,8 +32,8 @@ export class CoffeesController {
   constructor(private readonly coffeeService: CoffeeService) {}
 
   @Get()
-  findAll() {
-    return this.coffeeService.findAll()
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.coffeeService.findAll(paginationQuery)
   }
 
   @Get(':id')
@@ -35,9 +44,7 @@ export class CoffeesController {
 
   @Post()
   createCoffee(@Body() body: CreateCoffeeDto) {
-    console.log(body instanceof CreateCoffeeDto)
-    this.coffeeService.createCoffee(body)
-    return this.coffeeService.findAll()
+    return this.coffeeService.createCoffee(body)
   }
 
   @Patch(':id')

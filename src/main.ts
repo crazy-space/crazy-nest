@@ -2,7 +2,7 @@
  * @Author: Youzege
  * @Date: 2022-10-14 10:57:22
  * @LastEditors: Youzege
- * @LastEditTime: 2022-10-14 16:14:04
+ * @LastEditTime: 2022-10-15 22:29:20
  */
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
@@ -30,6 +30,9 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   )
 

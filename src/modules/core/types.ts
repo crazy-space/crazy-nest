@@ -1,7 +1,19 @@
+/*
+ * @Author: Youzege
+ * @Date: 2022-10-21 13:42:54
+ * @LastEditors: Youzege
+ * @LastEditTime: 2022-10-21 14:05:22
+ */
 /**
  * 一个类的类型
  */
+import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { SelectQueryBuilder } from 'typeorm'
+
+export type ClassType<T> = { new (...args: any[]): T }
+export interface CoreOptions {
+  database?: TypeOrmModuleOptions
+}
 
 /** ****************************** 数据请求 **************************** */
 /**

@@ -3,13 +3,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
+import { CategoryEntity } from './category.entity'
+import { CommentEntity } from './comment.entity'
+
 /**
- * 文章模型
- *
+ * @description 文章模型
  * @export
  * @class PostEntity
  * @extends {BaseEntity}
@@ -40,7 +45,7 @@ export class PostEntity extends BaseEntity {
    * @type {string}
    * @memberof PostEntity
    */
-  @Column({ comment: '文章内容', type: 'text' })
+  @Column({ comment: '文章内容', type: 'longtext' })
   body!: string
 
   /**
@@ -82,4 +87,30 @@ export class PostEntity extends BaseEntity {
     comment: '更新时间',
   })
   updatedAt!: Date
+
+  /**
+   * @description 与分类多对多关联
+   * @type {CategoryEntity[]}
+   */
+  @ManyToMany((type) => CategoryEntity, (category) => category.posts, {
+    // 在新增文章时,如果所属分类不存在则直接创建
+    cascade: true,
+  })
+  @JoinTable()
+  categories!: CategoryEntity[]
+
+  /**
+   * @description 与评论一对多关联
+   * @type {CommentEntity[]}
+   */
+  @OneToMany((type) => CommentEntity, (comment) => comment.post, {
+    cascade: true,
+  })
+  comments!: CommentEntity[]
+
+  /**
+   * @description 统计评论数量
+   * @type {number}
+   */
+  commentCount!: number
 }

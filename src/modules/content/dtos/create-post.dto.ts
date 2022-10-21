@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { IsNotEmpty, IsOptional, MaxLength } from 'class-validator'
+import { IsNotEmpty, IsOptional, IsUUID, MaxLength } from 'class-validator'
 
 /**
- * @description 创建文章时的请求数据验证
+ * @description 新增时的请求数据验证
  * @export
  * @class CreatePostDto
  */
@@ -34,4 +34,12 @@ export class CreatePostDto {
   })
   @IsOptional({ always: true })
   keywords?: string[]
+
+  @IsUUID(undefined, {
+    each: true,
+    always: true,
+    message: '分类ID格式不正确',
+  })
+  @IsOptional({ always: true })
+  categories?: string[]
 }

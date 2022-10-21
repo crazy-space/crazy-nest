@@ -1,35 +1,31 @@
-/*
- * @Author: Youzege
- * @Date: 2022-10-21 14:32:47
- * @LastEditors: Youzege
- * @LastEditTime: 2022-10-21 15:00:16
- */
-
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { CoreModule } from '../core/core.module'
 
-import { PostController } from './controllers/post.controller'
+import * as ControllerMaps from './controllers'
+import * as DtoMaps from './dtos'
+import * as EntityMaps from './entities'
+import * as RepositoryMaps from './repositories'
+import * as ServiceMaps from './services'
 
-import { CreatePostDto } from './dtos/create-post.dto'
-import { UpdatePostDto } from './dtos/update-post.dto'
-
-import { PostEntity } from './entities/post.entity'
-import { PostRepository } from './repositories/post.repository'
-import { PostService } from './services/post.service'
-
+const entities = Object.values(EntityMaps)
+const repositories = Object.values(RepositoryMaps)
+const dtos = Object.values(DtoMaps)
+const services = Object.values(ServiceMaps)
+const controllers = Object.values(ControllerMaps)
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PostEntity]),
+    TypeOrmModule.forFeature(entities),
     // 注册自定义Repository
-    CoreModule.forRepository([PostRepository]),
+    CoreModule.forRepository(repositories),
   ],
-  providers: [PostService, CreatePostDto, UpdatePostDto],
-  controllers: [PostController],
+  controllers,
+  providers: [...dtos, ...services],
   exports: [
     // 导出自定义Repository,以供其它模块使用
-    CoreModule.forRepository([PostRepository]),
+    CoreModule.forRepository(repositories),
+    ...services,
   ],
 })
 export class ContentModule {}

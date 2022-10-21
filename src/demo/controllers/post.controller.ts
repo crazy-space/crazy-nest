@@ -1,3 +1,9 @@
+/*
+ * @Author: Youzege
+ * @Date: 2022-10-21 13:42:54
+ * @LastEditors: Youzege
+ * @LastEditTime: 2022-10-21 14:58:32
+ */
 import {
   Body,
   Controller,
@@ -28,7 +34,7 @@ let posts: PostEntity[] = [
 ].map((value, id) => ({ ...value, id }))
 
 @Controller('posts')
-export class PostController {
+export class Post1Controller {
   // GET 路由--获取所有文章
   @Get()
   async index() {

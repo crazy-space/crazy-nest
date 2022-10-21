@@ -2,7 +2,7 @@
  * @Author: Youzege
  * @Date: 2022-10-21 13:58:03
  * @LastEditors: Youzege
- * @LastEditTime: 2022-10-21 14:19:44
+ * @LastEditTime: 2022-10-21 15:12:56
  */
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
@@ -12,7 +12,7 @@ export const database: () => TypeOrmModuleOptions = () => ({
   port: 3306,
   username: 'root',
   password: 'pass123',
-  database: 'mysql',
+  database: 'full_stack_mysql',
 
   entities: [],
   // 自动注册模块
